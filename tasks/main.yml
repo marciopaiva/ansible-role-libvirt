@@ -1,0 +1,4 @@
+---
+# tasks file for ansible-role-libvirt-tmp
+- name: Test
+  ping:
