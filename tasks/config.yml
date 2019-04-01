@@ -1,0 +1,42 @@
+---
+- name: ensure ip forwarding is enabled
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    sysctl_set: true
+    state: present
+    reload: true
+
+- name: ensure libvirt is configured
+  ini_file:
+    path: /etc/libvirt/libvirtd.conf
+    section:
+    option: "{{ item.name }}"
+    value: "{{ item.val }}"
+    mode: 0644
+    owner: root
+  loop: "{{ libvirt_settings }}"
+
+- name: ensure network-manager service is enabled and started
+  service:
+    name: NetworkManager
+    enabled: true
+    state: started
+
+- name: ensure dbus service is enabled and started
+  service:
+    name: dbus.service
+    enabled: true
+    state: started
+
+- name: ensure dbus socket is enabled and started
+  service:
+    name: dbus.socket
+    enabled: true
+    state: started
+
+- name: ensure libvirt service is enabled and started
+  service:
+    name: libvirtd
+    enabled: true
+    state: started

@@ -1,0 +1,40 @@
+---
+# Whether to require that Intel Virtualisation Technology (VT) is enabled in
+# order to run this role. While this provides better VM performance, it may not
+# be available in certain environments.
+libvirt_require_vt: true
+
+# Default connection URI
+libvirt_uri: 'qemu:///system'
+
+# Settings for libvirt.conf configurations
+libvirt_settings: []
+
+# List of network definitions in libvirt, specified as YAML dicts.
+libvirt_networks:
+  - '{{ network_default }}'
+
+# Set network default to autostart and active
+network_default:
+  - name: 'default'
+    type: 'dnsmasq'
+    bridge: 'virbr0'
+    addresses:
+      - '192.168.122.1/24'
+    dhcp_range:
+      - '2'
+      - '-2'
+    state: 'active'
+    autostart: true
+    dhcp: true
+    forward: true
+
+libvirt_pools:
+  - '{{ pool_default }}'
+
+pool_default:
+  - name: 'default'
+    type: 'dir'
+    path: '/var/lib/libvirt/images'
+    state: 'active'
+    autostart: true
