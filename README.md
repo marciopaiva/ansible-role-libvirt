@@ -1,4 +1,4 @@
-Role Name
+Ansible Role: libvirt
 =========
 
 [![Build Status](https://travis-ci.org/marciopaiva/ansible-role-libvirt.svg?branch=master)](https://travis-ci.org/marciopaiva/ansible-role-libvirt)
