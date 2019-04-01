@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: libvirt
   author: Marcio Paiva Barbosa
   description: This role install and configure a host as a Libvirt (KVM) Hypervisor.
   company: Red Hat Consulting Brazil
