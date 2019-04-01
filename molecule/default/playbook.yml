@@ -3,3 +3,7 @@
   hosts: all
   roles:
     - role: marciopaiva.libvirt
+
+  tasks:
+    - name: ping servers
+      ping:

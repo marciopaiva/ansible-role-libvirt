@@ -2,7 +2,7 @@ Role Name
 =========
 
 [![Build Status](https://travis-ci.org/marciopaiva/ansible-role-libvirt.svg?branch=master)](https://travis-ci.org/marciopaiva/ansible-role-libvirt)
-[![Ansible Galaxy](http://img.shields.io/badge/galaxy-marciopaiva.libvirt-660198.svg?style=flat)](https://galaxy.ansible.com/detail#/role/4554)
+[![Ansible Galaxy](http://img.shields.io/badge/galaxy-marciopaiva.libvirt-660198.svg?style=flat)](https://galaxy.ansible.com/marciopaiva/ansible-role-libvirt)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](LICENSE)
 
 
@@ -13,13 +13,13 @@ Requirements
 
 The host should have Virtualization Technology (VT) enabled.
 
-This role requires root access, so either run it in a playbook with a global `become: yes`, or invoke the role in your playbook like:
+This role requires root access, so either run it in a playbook with a global `become: true`, or invoke the role in your playbook like:
 
 ``` yaml
 - hosts: servers
   roles:
     - role: marciopaiva.libvirt
-      become: yes
+      become: true
 ```
 
 Role Variables
@@ -46,7 +46,7 @@ Example Playbook
 - hosts: servers
   roles:
     - role: marciopaiva.libvirt
-      become: yes
+      become: true
 ```
 
 Author Information

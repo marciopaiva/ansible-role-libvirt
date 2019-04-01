@@ -8,16 +8,16 @@ galaxy_info:
   platforms:
     - name: EL
       versions:
-        - all
+        - 7
     - name: Fedora
       versions:
-        - all
+        - 29
     - name: Ubuntu
       versions:
-        - all
+        - bionic
     - name: Debian
       versions:
-        - all
+        - stretch
   galaxy_tags:
     - system
     - virtualization

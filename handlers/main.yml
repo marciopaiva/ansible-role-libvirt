@@ -1,2 +1,5 @@
 ---
-# handlers file for ansible-role-libvirt-tmp
+- name: restart libvirt
+  service:
+    name: libvirtd
+    state: restarted

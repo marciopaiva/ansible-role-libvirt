@@ -6,10 +6,10 @@ env:
   global:
     - ROLE_NAME: libvirt
   matrix:
-    - MOLECULE_DISTRO: centos7
-    - MOLECULE_DISTRO: fedora29
-    - MOLECULE_DISTRO: ubuntu1804
-    - MOLECULE_DISTRO: debian9
+    - MOLECULE_DISTRO: centos
+    - MOLECULE_DISTRO: fedora
+    - MOLECULE_DISTRO: ubuntu
+    - MOLECULE_DISTRO: debian
 
 install:
   # Install test dependencies.

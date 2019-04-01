@@ -1,4 +1,30 @@
 ---
-# tasks file for ansible-role-libvirt-tmp
-- name: Test
-  ping:
+- name: manage libvirt prelude
+  include: prelude.yml
+  tags:
+    - role::libvirt:install
+
+- name: manage libvirt validate
+  include: validate.yml
+  tags:
+    - role::libvirt:install
+
+- name: manage libvirt install
+  include: install.yml
+  tags:
+    - role::libvirt:install
+
+- name: manage libvirt config
+  include: config.yml
+  tags:
+    - role::libvirt:install
+
+- name: manage libvirt networks
+  include: networks.yml
+  tags:
+    - role::libvirt:networks
+
+- name: manage libvirt pools
+  include: pools.yml
+  tags:
+    - role::libvirt:pools
