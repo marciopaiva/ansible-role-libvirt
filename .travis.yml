@@ -13,7 +13,7 @@ env:
 
 install:
   # Install test dependencies.
-  - pip install molecule docker python-netaddr
+  - pip install molecule docker netaddr
 
 before_script:
   # Use actual Ansible Galaxy role name for the project directory.
