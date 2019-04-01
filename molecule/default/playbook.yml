@@ -1,6 +1,8 @@
 ---
 - name: Converge
   hosts: all
+  vars:
+    libvirt_require_vt: false
   roles:
     - role: marciopaiva.libvirt
 
