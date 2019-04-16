@@ -28,7 +28,8 @@ network_default:
     autostart: true
     dhcp: true
     forward: true
-
+    
+# Set pool default to autostart and active
 libvirt_pools:
   - '{{ pool_default }}'
 
