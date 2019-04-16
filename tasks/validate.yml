@@ -1,0 +1,28 @@
+---
+- name: verify that Virtualization Technology (VT) is enabled
+  command: grep -c -E 'svm|vmx' /proc/cpuinfo
+  changed_when: false
+  failed_when: false
+  register: result
+
+- name: set a fact about whether Virtualization Technology (VT) is enabled
+  set_fact:
+    vt_enabled: "{{ result.rc == 0 }}"
+
+- name: notify if Virtualization Technology (VT) is disabled
+  debug:
+    msg: >
+      Virtualization Technology (VT) is currently disabled. Please enable VT
+      before running this role again.
+  when:
+    - not libvirt_require_vt | bool
+    - not vt_enabled | bool
+
+- name: fail if Virtualization Technology (VT) is disabled
+  fail:
+    msg: >
+      Virtualization Technology (VT) is currently disabled. Please enable VT
+      before running this role again.
+  when:
+    - libvirt_require_vt | bool
+    - not vt_enabled | bool

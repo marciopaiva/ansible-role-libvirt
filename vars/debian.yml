@@ -1,0 +1,12 @@
+---
+libvirt_packages:
+  - qemu-kvm
+  - qemu-guest-agent
+  - libvirt-daemon
+  - libvirt-daemon-system
+  - libvirt-clients
+  - libnss-libvirt
+  - virtinst
+  - libosinfo-bin
+  - network-manager
+  - python-lxml

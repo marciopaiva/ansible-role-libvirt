@@ -1,0 +1,90 @@
+---
+- name: stop storage pools if requested
+  virt_pool:
+    name: '{{ item.name }}'
+    uri: '{{ libvirt_uri }}'
+    state: 'inactive'
+  with_flattened: '{{ libvirt_pools }}'
+  become: false
+  register: libvirt_register_stop
+  when:
+    - item.name|d()
+    - item.state|d() in [ 'inactive', 'undefined', 'absent' ]
+
+- name: delete storage pools if requested
+  virt_pool:
+    name: '{{ item.item.name }}'
+    uri: '{{ libvirt_uri }}'
+    command: 'delete'
+    mode: '{{ item.item.mode | d(omit) }}'
+  with_flattened: '{{ libvirt_register_stop.results }}'
+  become: false
+  when:
+    - item.changed|d()
+    - item.item.name|d()
+    - item.item.delete|d(false)
+    - item.item.state|d() in [ 'undefined' ]
+    - item.item.type in [ 'dir', 'nfs', 'logical' ]
+
+- name: undefine storage pools if requested
+  virt_pool:
+    name: '{{ item.name }}'
+    uri: '{{ libvirt_uri }}'
+    state: 'absent'
+  with_flattened: '{{ libvirt_pools }}'
+  become: false
+  when:
+    - item.name|d()
+    - item.state|d() in [ 'undefined', 'absent' ]
+
+- name: define storage pools if requested
+  virt_pool:
+    name: '{{ item.name }}'
+    uri: '{{ libvirt_uri }}'
+    xml: '{{ lookup("template", "pool-" + item.type + ".xml.j2") }}'
+    state: 'present'
+  with_flattened: '{{ libvirt_pools }}'
+  become: false
+  register: libvirt_register_define
+  when:
+    - item.name|d()
+    - item.state|d('active') not in [ 'undefined', 'absent' ]
+
+- name: build new storage pools if defined
+  virt_pool:
+    name: '{{ item.item.name }}'
+    uri: '{{ libvirt_uri }}'
+    command: 'build'
+    mode: '{{ item.item.mode | d(omit) }}'
+  with_flattened: '{{ libvirt_register_define.results }}'
+  become: false
+  when:
+    - item.changed|d()
+    - item.item.name|d()
+    - item.item.state|d('active') not in [ 'undefined', 'absent' ]
+    - item.item.build|d(true)
+    - item.item.type in [ 'dir', 'nfs' ] or
+      item.item.type == 'logical'
+    - item.item.devices|d()
+
+- name: start storage pools if not started
+  virt_pool:
+    name: '{{ item.name }}'
+    uri: '{{ libvirt_uri }}'
+    state: 'active'
+  with_flattened: '{{ libvirt_pools }}'
+  become: false
+  when:
+    - item.name|d()
+    - item.state|d('active') in [ 'active' ]
+
+- name: set autostart attribute on storage pools
+  virt_pool:
+    name: '{{ item.name }}'
+    uri: '{{ libvirt_uri }}'
+    autostart: '{{ "yes" if (item.autostart|d(true)) else "no" }}'
+  with_flattened: '{{ libvirt_pools }}'
+  become: false
+  when:
+    - item.name|d()
+    - item.state|d('active') not in [ 'undefined', 'absent' ]
