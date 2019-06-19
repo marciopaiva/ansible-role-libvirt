@@ -15,3 +15,14 @@
   register: result
   until: result is success
   retries: 3
+
+- name: ensure libvirt group exists
+  group:
+    name: libvirt
+    state: present
+
+- name: add '{{ ansible_user }}' to libvirt group
+  user:
+    name: "{{ ansible_user }}"
+    groups: libvirt
+    append: yes
