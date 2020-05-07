@@ -4,7 +4,7 @@ libvirt_packages:
   - qemu-guest-agent
   - libvirt
   - libvirt-daemon-kvm
-  - libvirt-python
   - libvirt-nss
   - python-lxml
+  - python-netaddr
   - NetworkManager
